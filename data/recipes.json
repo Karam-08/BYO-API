@@ -1,1 +1,16 @@
-[]
+[
+  {
+    "id": "mgigtnq0",
+    "dishName": "Donut",
+    "tags": "dessert, snack",
+    "rating": "10",
+    "addedOn": "2025-10-08T20:52:56.280Z"
+  },
+  {
+    "id": "mgih108n",
+    "dishName": "karam",
+    "tags": "entree",
+    "rating": "2",
+    "addedOn": "2025-10-08T20:58:39.095Z"
+  }
+]

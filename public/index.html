@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Recipe API Form</title>
+    <link rel="stylesheet" href="./style.css">
+</head>
+<body>
+    <main class="container">
+        <h1>Recipe API Input Form</h1>
+        <section class="card">
+            <form method="POST" action="/api/recipes" id="recipe-form">
+                <div class="grid">
+                    <label>Name of dish:
+                        <input type="text" name="dishName" required>
+                    </label>
+                    <label>Ingredients:
+                        <input type="text" name="ingredients" placeholder="EX: dough, sugar, cinnamon..." required>
+                    </label>
+                    <label>Tags:
+                        <input type="text" name="tags" placeholder="EX: entree, snack..." required>
+                    </label>
+                    <label>Rating (1-10):
+                        <input type="number" name="rating" min="1" max="10" required>
+                    </label>
+                </div>
+                <button type="submit">Submit Form</button>
+            </form>
+        </section>
+
+        <section class="card">
+            <h2>View Saved JSON Recipes</h2>
+            <button>Refresh List</button>
+            <pre id="js-list" class="result"></pre>
+        </section>
+    </main>
+</body>
+</html>

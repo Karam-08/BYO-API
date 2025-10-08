@@ -2,7 +2,7 @@ import express from 'express'
 import path from 'path'
 import morgan from 'morgan'
 import {fileURLToPath} from 'url'
-// import {ensureDataFile, listRecipes, addRecipe} from './utils/recipes.js'
+import {ensureDataFile, listRecipes, addRecipe} from './utils/recipes.js'
 
 const __filename = fileURLToPath(import.meta.url)
 const __dirname = path.dirname(__filename)
@@ -17,7 +17,7 @@ app.use(morgan(':method :url :status :res[content-length] - :response-time ms'))
 
 // Static Folder
 app.use(express.static(path.join(__dirname, "public")))
-// ensureDataFile() // Makes sure the data file(recipes.json) exists when the project boots
+ensureDataFile() // Makes sure the data file(recipes.json) exists when the project boots
 
 app.get('/api/recipes', async (req, res, next) =>{
     try{
@@ -83,7 +83,7 @@ app.get('/recipes', async (req, res) =>{
     }
 })
 
-app.get('/recipes/:id', async (req, res) =>{
+app.get('/api/recipes/:id', async (req, res) =>{
     try{
         const recipes = await readDB()
         const recipe = recipes.find(r => r.id == req.params.id)
@@ -99,15 +99,27 @@ app.get('/recipes/:id', async (req, res) =>{
 
 app.post('/recipes', async (req, res) =>{
     try{
-
+        const data = req.body
+        const created = await addRecipe(data)
+        res.status(201).json({message: "Recipe Added:", recipe:created})
     }catch(err){
         console.error(err)
         res.status(500).json({error: "Server could not add the recipe."})
     }
 })
 
-app.patch('', async (req, res) =>{
+app.patch('/recipes/:id', async (req, res) =>{
     try{
+        const recipes = await readDB()
+        const idx = recipes.findIndex(r, r.id == req.params.id)
+
+        if(idx === 1){
+            return res.status(404).json({error: "Recipe not found."})
+        }
+
+
+
+        res.status(200).json()
 
     }catch(err){
         console.error(err)
