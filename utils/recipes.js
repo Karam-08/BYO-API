@@ -1,6 +1,7 @@
 import fs from 'fs/promises'
 import path from 'path'
-import { fileURLToPath } from 'url'
+import {fileURLToPath} from 'url'
+import {listTags} from './tags.js'
 
 const __filename = fileURLToPath(import.meta.url)
 const __dirname = path.dirname(__filename)
@@ -20,8 +21,8 @@ export async function ensureDataFile(){
 
 // Read all stuednts from json
 export async function listRecipes(){
-    const rawData = await fs.readFile(file, "utf8")
     try{
+        const rawData = await fs.readFile(file, "utf8")
         return JSON.parse(rawData)
     }catch{
         console.error(err)
@@ -32,13 +33,13 @@ export async function listRecipes(){
 }
 
 // Validate data
-function dataValidation(input){
+async function dataValidation(input){
     const errors = []
 
     const dishName = String(input.dishName || "").trim()
     const ingredients = String(input.ingredients || "").trim()
     const tags = String(input.tags || "").trim()
-    const rating = String(input.rating || "").trim()
+    const rating = Number(input.rating)
 
     if(!dishName){errors.push("The name of the dish is required.")}
     if(!ingredients){errors.push("The ingredients are required.")}
@@ -47,10 +48,26 @@ function dataValidation(input){
         errors.push("The rating must be a number between 1 and 10.")
     }
 
+    // Splits the tags into an array
+    const tagsArray = tagsInput.split(',').map(t => t.trim().toLowerCase())
+
+    // Validates the tags against tags.json
+    const existingTags = (await listTags()).map(t => t.name)
+    const invalidTags = tagsArray.filter(t => !existingTags.includes(t))
+    if(invalidTags.length > 0){
+        errors.push(`These tags do not exist: ${invalidTags.join(', ')}`)
+    }
+
+    if(errors.length > 0){
+        const err = new Error('Invalid recipe data')
+        err.details = errors
+        throw err
+    }
+
     return{
         dishName,
         ingredients: ingredients.toLowerCase,
-        tags: tags.toLowerCase(),
+        tags: tagsArray,
         rating
     }
 }
@@ -64,8 +81,16 @@ function genID(){
 export async function addRecipe(input){
     const cleanData = dataValidation(input)
 
+    const availableTags = await listTags()
+    const tagNames = availableTags.map(t => t.name)
+    const invalidTags = cleanData.tags.filter(t => !tagNames.includes(t))
+
+    if(invalidTags.length > 0){
+        throw new Error(`Invalid tags: ${invalidTags.join(', ')}`)
+    }
+
     const newRecipe = {
-        id: Date.now().toString(36),
+        id: genID(),
         ...cleanData,
         addedOn: new Date().toISOString()
     }
@@ -74,4 +99,11 @@ export async function addRecipe(input){
     recipes.push(newRecipe)
     await fs.writeFile(file, JSON.stringify(recipes, null, 2), "utf8")
     return newRecipe
+}
+
+export async function listTags(){
+    const recipes = await listRecipes()
+    const allTags = recipes.flatMap(r => r.tags) // Flattens all of the tags into a single array
+    const uniqueTags = [...new Set(allTags)] // Removes duplicates
+    return uniqueTags
 }
