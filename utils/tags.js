@@ -6,7 +6,7 @@ const __filename = fileURLToPath(import.meta.url)
 const __dirname = path.dirname(__filename)
 
 const folder = path.join(__dirname, '..', 'data')
-const file = path.join(folder, "recipes.json")
+const file = path.join(folder, "tags.json")
 
 // Verify or create file before booting program
 export async function ensureTagsFile(){
@@ -34,7 +34,7 @@ export async function addTag(name){
         throw new Error('Tag name is required and it must be in a string.')
     }
 
-    const cleanName = name.trim.toLowerCase
+    const cleanName = name.trim.toLowerCase()
     const tags = await listTags()
 
     if(tags.some(t => t.name === cleanName)) {
@@ -52,7 +52,7 @@ export async function addTag(name){
     return newTag
 }
 
-export async function deleteTag(id) {
+export async function deleteTag(id){
     const tags = await listTags()
     const idx = tags.findIndex(t => t.id === id)
     if (idx === -1) throw new Error('Tag not found.')

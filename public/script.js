@@ -1,5 +1,5 @@
 const form = document.getElementById('recipe-form')
-const listButton = document.querySelector('section.card button')
+const listButton = document.getElementById('listButton')
 const listPre = document.getElementById('js-list')
 
 form.addEventListener('submit', async (e) =>{
@@ -17,7 +17,7 @@ form.addEventListener('submit', async (e) =>{
     try{
         const res = await fetch('/api/recipes', {
             method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
+            headers: {'Content-Type': 'application/json'},
             body: JSON.stringify(recipeData)
         })
         const data = await res.json()

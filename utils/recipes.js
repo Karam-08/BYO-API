@@ -13,13 +13,13 @@ const file = path.join(folder, "recipes.json")
 export async function ensureDataFile(){
     try{
         await fs.mkdir(folder, {recursive:true})
-        await fs.access(file)
+        await fs.access(file) 
     }catch{
         await fs.writeFile(file, "[]", "utf8")
     }
 }
 
-// Read all stuednts from json
+// Reads all recipes from json
 export async function listRecipes(){
     try{
         const rawData = await fs.readFile(file, "utf8")
