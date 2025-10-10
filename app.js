@@ -79,7 +79,7 @@ app.post('/api/recipes', async (req, res, next) =>{
 app.get('/api/recipes/:id', async (req, res) =>{
     try{
         const recipes = await readDB()
-        const recipe = recipes.find((r) => r.id == req.params.id)
+        const recipe = recipes.find(r => r.id == req.params.id)
         if(!recipe){
             return res.status(404).json({error: "recipe not found"})
         }
@@ -94,15 +94,19 @@ app.get('/api/recipes/:id', async (req, res) =>{
 app.patch('/api/recipes/:id', async (req, res, next) =>{
     try{
         const recipes = await readDB()
-        const idx = recipes.findIndex(r, r.id == req.params.id)
+        const idx = recipes.findIndex(r => r.id == req.params.id)
 
         if(idx === 1){
             return res.status(404).json({error: "Recipe not found."})
         }
 
-        recipes[idx] = {...recipes[idx], ...req.body, updatedAt: new Date().toISOString()}
-        await writeDB(recipes)
+        recipes[idx] = {
+            ...recipes[idx], 
+            ...req.body, 
+            updatedAt: new Date().toISOString()
+        }
 
+        await writeDB(recipes)
         res.status(200).json({message: "Recipe updated", recipe: recipes[idx]})
 
     }catch(err){
@@ -114,7 +118,7 @@ app.patch('/api/recipes/:id', async (req, res, next) =>{
 app.delete('/api/recipes/:id', async (req, res, next) =>{
     try{
         const recipes = await readDB()
-        const idx = recipes.findIndex(r, r.id == req.params.id)
+        const idx = recipes.findIndex(r => r.id === req.params.id)
 
         if(idx === -1){
             return res.status(404).json({error: "Recipe not found."})
@@ -123,7 +127,7 @@ app.delete('/api/recipes/:id', async (req, res, next) =>{
         const deletedRecipe = recipes.splice(idx, 1)[0]
         await writeDB(recipes)
         
-        res.status(204).json(deletedRecipe)
+        res.status(200).json({message: 'Recipe deleted', deletedRecipe})
 
     }catch(err){
         next(err)
@@ -143,7 +147,7 @@ app.get('/api/tags', async (req, res, next) =>{
 // Adds tags
 app.post('/api/tags', async (req, res) =>{
     try{
-        const created = await addTag(req.body)
+        const created = await addTag(req.body.name)
         res.status(201).json({ message: 'Tag added', tag: created })
     }catch(err){
         res.status(400).json({ error: err.message })

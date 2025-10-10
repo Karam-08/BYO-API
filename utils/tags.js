@@ -37,8 +37,8 @@ export async function addTag(name){
     const cleanName = name.trim.toLowerCase()
     const tags = await listTags()
 
-    if(tags.some(t => t.name === cleanName)) {
-        throw{error: {message: "Tag already exists."}}
+    if(tags.some(t => t.name === cleanName)){
+        throw new Error("Tag already exists.")
     }
 
     const newTag = {

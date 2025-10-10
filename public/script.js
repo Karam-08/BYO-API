@@ -8,7 +8,7 @@ form.addEventListener('submit', async (e) =>{
     // Gets form values
     const dishName = form.dishName.value.trim()
     const ingredients = form.ingredients.value.trim()
-    const tags = form.tags.value.trim().split(',').map(t => t.trim().toLowerCase())
+    const tags = form.tags.value.trim()
     const rating = Number(form.rating.value)
 
     // Builds the object
@@ -30,7 +30,7 @@ form.addEventListener('submit', async (e) =>{
         form.reset()
 
     }catch(err){
-        alert('Error: ' + (err.error?.message || err.message))
+        alert('Error: ' + (err.error?.message || err.message || JSON.stringify(err)))
     }
 })
 
