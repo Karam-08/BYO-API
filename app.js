@@ -5,7 +5,7 @@ import cors from 'cors'
 import dotenv from 'dotenv'
 import {fileURLToPath} from 'url'
 import {ensureDataFile, listRecipes, addRecipe} from './utils/recipes.js'
-import {ensureTagsFile, listTags, addTag, deleteTag} from './utils/tags.js'
+import {ensureTagsFile, listTags} from './utils/tags.js'
 import fs from 'fs/promises'
 
 dotenv.config()
@@ -96,7 +96,7 @@ app.patch('/api/recipes/:id', async (req, res, next) =>{
         const recipes = await readDB()
         const idx = recipes.findIndex(r => r.id == req.params.id)
 
-        if(idx === 1){
+        if(idx === -1){
             return res.status(404).json({error: "Recipe not found."})
         }
 
@@ -141,25 +141,6 @@ app.get('/api/tags', async (req, res, next) =>{
         res.status(200).json({count: tags.length, tags})
     }catch(err){
         next(err)
-    }
-})
-
-// Adds tags
-app.post('/api/tags', async (req, res) =>{
-    try{
-        const created = await addTag(req.body.name)
-        res.status(201).json({ message: 'Tag added', tag: created })
-    }catch(err){
-        res.status(400).json({ error: err.message })
-    }
-})
-
-app.delete('/api/tags/:id', async (req, res) =>{
-      try{
-        const deleted = await deleteTag(req.params.id)
-        res.status(200).json({message: 'Tag deleted', deleted})
-    }catch(err){
-        res.status(404).json({error: err.message})
     }
 })
 

@@ -3,38 +3,57 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Recipe API Form</title>
+    <title>My API Homepage</title>
     <link rel="stylesheet" href="./style.css">
 </head>
 <body>
-    <main class="container">
-        <h1>Recipe API Input Form</h1>
-        <section class="card">
-            <form method="POST" action="/api/recipes" id="recipe-form">
-                <div class="grid">
-                    <label>Name of dish:
-                        <input type="text" name="dishName" required>
-                    </label>
-                    <label>Ingredients:
-                        <input type="text" name="ingredients" placeholder="EX: dough, sugar, cinnamon..." required>
-                    </label>
-                    <label>Tags:
-                        <input type="text" name="tags" placeholder="EX: entree, snack..." required>
-                    </label>
-                    <label>Rating (1-10):
-                        <input type="number" name="rating" min="1" max="10" required>
-                    </label>
-                </div>
-                <button type="submit">Submit Form</button>
-            </form>
-        </section>
+    <h1>Welcome to My Recipe API</h1>
+    <p>This API allows you to manage recipes and tags. Below are the available endpoints and how to use them.</p>
 
-        <section class="card">
-            <h2>View Saved JSON Recipes</h2>
-            <button id="listButton">Refresh List</button>
-            <pre id="js-list" class="result"></pre>
-        </section>
-    </main>
+    <h2>Primary Resource: /recipes</h2>
+    <ul>
+        <li><strong>POST /recipes</strong> - Creates a new recipe</li>
+        <li><strong>GET /recipes</strong> - List every recipe</li>
+        <li><strong>GET /recipes/:id</strong> - Gets a single recipe</li>
+        <li><strong>PATCH /recipes/:id</strong> - Updates a recipe</li>
+        <li><strong>DELETE /recipes/:id</strong> - Deletes a recipe</li>
+    </ul>
+
+    <h2>Secondary Resource: /tags</h2>
+    <ul>
+        <li><strong>GET /tags</strong> - List all tags</li>
+    </ul>
+
+    <h2>Viewing the API:</h2>
+    <ul>
+        <li><strong>/api/recipes</strong> - Views every recipe</li>
+        <li><strong>/api/recipes/ID</strong> - Views a specific recipe from the ID</li>
+        <li><strong>/api/tags</strong> - Views all tags</li>
+        <li>Note: You must add the api link to the end of the URL to view the API things</li>
+        <li>EX: http://localhost:5000/api/recipes</li>
+    </ul>
+
+    <h2>Example POST Request</h2>
+    <pre>
+POST /recipes
+Content-Type: application/json
+
+{
+    "name": "Chocolate Cake",
+    "tags": ["dessert", "baking"]
+}
+    </pre>
+
+    <h2>Example Response</h2>
+    <pre>
+{
+    "id": 1,
+    "name": "Chocolate Cake",
+    "tags": ["dessert", "baking"],
+    "createdAt": "2025-10-09T18:00:00Z"
+}
+    </pre>
+
+    <p>Use tools like <strong>Postman</strong> to interact with the API endpoints.</p>
 </body>
-<script src="./script.js"></script>
 </html>

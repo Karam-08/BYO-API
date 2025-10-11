@@ -54,8 +54,9 @@ async function dataValidation(input){
     // Validates the tags against tags.json
     const existingTags = (await listValidTags()).map(t => t.name)
     const invalidTags = tagsArray.filter(t => !existingTags.includes(t))
+
     if(invalidTags.length > 0){
-        errors.push(`These tags do not exist: ${invalidTags.join(', ')}`)
+        throw new Error(`Invalid tags: ${invalidTags.join(", ")}`);
     }
 
     if(errors.length > 0){
@@ -81,7 +82,7 @@ function genID(){
 export async function addRecipe(input){
     const cleanData = await dataValidation(input)
 
-    const availableTags = await listTags()
+    const availableTags = await listValidTags()
     const tagNames = availableTags.map(t => t.name)
     const invalidTags = cleanData.tags.filter(t => !tagNames.includes(t))
 

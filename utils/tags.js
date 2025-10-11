@@ -28,36 +28,3 @@ export async function listTags(){
         return []
     }
 }
-
-export async function addTag(name){
-    if(!name || typeof name !== 'string'){
-        throw new Error('Tag name is required and it must be in a string.')
-    }
-
-    const cleanName = name.trim.toLowerCase()
-    const tags = await listTags()
-
-    if(tags.some(t => t.name === cleanName)){
-        throw new Error("Tag already exists.")
-    }
-
-    const newTag = {
-        id: Date.now().toString(36), 
-        name: cleanName
-    }
-
-    tags.push(newTag)
-    await fs.writeFile(file, JSON.stringify(tags, null, 2), 'utf8')
-    
-    return newTag
-}
-
-export async function deleteTag(id){
-    const tags = await listTags()
-    const idx = tags.findIndex(t => t.id === id)
-    if (idx === -1) throw new Error('Tag not found.')
-
-    const deleted = tags.splice(idx, 1)[0]
-    await fs.writeFile(file, JSON.stringify(tags, null, 2), 'utf8')
-    return deleted
-}

@@ -1,1 +1,12 @@
-[]
+[
+  { "id": "t1", "name": "dessert" },
+  { "id": "t2", "name": "snack" },
+  { "id": "t3", "name": "breakfast" },
+  { "id": "t4", "name": "lunch" },
+  { "id": "t5", "name": "dinner" },
+  { "id": "t6", "name": "healthy" },
+  { "id": "t7", "name": "vegan" },
+  { "id": "t8", "name": "gluten-free" },
+  { "id": "t9", "name": "quick" },
+  { "id": "t10", "name": "spicy" }
+]
