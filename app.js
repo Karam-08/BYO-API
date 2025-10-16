@@ -34,12 +34,12 @@ app.get('/', (req, res) =>{
         message: "Welcome to the Recipe API!",
         usage: "Use the end points to manage recipes.",
         endpoints: {
-            "GET /api/recipes": "List all recipes",
-            "POST /api/recipes": "Create a new recipe",
-            "GET /api/recipes/:id": "Get one recipe by ID",
-            "PATCH /api/recipes/:id": "Update part of a recipe",
-            "DELETE /api/recipes/:id": "Delete a recipe",
-            "GET /api/tags": "List all tags from recipes"
+            "GET /recipes": "List all recipes",
+            "POST /recipes": "Create a new recipe",
+            "GET /recipes/:id": "Get one recipe by ID",
+            "PATCH /recipes/:id": "Update part of a recipe",
+            "DELETE /recipes/:id": "Delete a recipe",
+            "GET /tags": "List all tags from recipes"
         }
     })
 })
@@ -55,7 +55,7 @@ async function writeDB(data){
 }
 
 // Gets all the recipes
-app.get('/api/recipes', async (req, res, next) =>{
+app.get('/recipes', async (req, res, next) =>{
     try{
         const recipes = await listRecipes()
         res.status(200).json({count: recipes.length, recipes})
@@ -65,7 +65,7 @@ app.get('/api/recipes', async (req, res, next) =>{
 })
 
 // Adds a new recipe
-app.post('/api/recipes', async (req, res, next) =>{
+app.post('/recipes', async (req, res, next) =>{
     try{
         const data = req.body
         const created = await addRecipe(data)
@@ -76,7 +76,7 @@ app.post('/api/recipes', async (req, res, next) =>{
 })
 
 // Gets a recipe by ID
-app.get('/api/recipes/:id', async (req, res) =>{
+app.get('/recipes/:id', async (req, res) =>{
     try{
         const recipes = await readDB()
         const recipe = recipes.find(r => r.id == req.params.id)
@@ -91,7 +91,7 @@ app.get('/api/recipes/:id', async (req, res) =>{
 })
 
 // Change a recipe
-app.patch('/api/recipes/:id', async (req, res, next) =>{
+app.patch('/recipes/:id', async (req, res, next) =>{
     try{
         const recipes = await readDB()
         const idx = recipes.findIndex(r => r.id == req.params.id)
@@ -115,7 +115,7 @@ app.patch('/api/recipes/:id', async (req, res, next) =>{
 })
 
 // Delete recipe
-app.delete('/api/recipes/:id', async (req, res, next) =>{
+app.delete('/recipes/:id', async (req, res, next) =>{
     try{
         const recipes = await readDB()
         const idx = recipes.findIndex(r => r.id === req.params.id)
@@ -135,7 +135,7 @@ app.delete('/api/recipes/:id', async (req, res, next) =>{
 })
 
 // Gets tags
-app.get('/api/tags', async (req, res, next) =>{
+app.get('/tags', async (req, res, next) =>{
     try{
         const tags = await listTags()
         res.status(200).json({count: tags.length, tags})

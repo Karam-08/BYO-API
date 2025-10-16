@@ -24,14 +24,25 @@
         <li><strong>GET /tags</strong> - List all tags</li>
     </ul>
 
-    <h2>Viewing the API:</h2>
+    <h2>API endpoints:</h2>
     <ul>
-        <li><strong>/api/recipes</strong> - Views every recipe</li>
-        <li><strong>/api/recipes/ID</strong> - Views a specific recipe from the ID</li>
-        <li><strong>/api/tags</strong> - Views all tags</li>
+        <li>
+            <p>View every recipe:</p>
+            <p>localhost:5000/recipes</p>
+        </li>
         <br>
-        <li>Note: You must add the api link to the end of the URL to view the API</li>
-        <li>EX: http://localhost:5000/api/recipes</li>
+        <br>
+        <li>
+            <p>Views a single recipe:</p>
+            <p>localhost:5000/recipes/{:id}</p>
+            <p><strong>(replace {:id} with the actual recipe ID)</strong></p>
+        </li>
+        <br>
+        <br>
+        <li>
+            <p>View every tag:</p>
+            <p>localhost:5000/tags</p>
+        </li>
     </ul>
 
     <h2>Example POST Request</h2>
@@ -41,7 +52,7 @@ Content-Type: application/json
 
 {
     "name": "Chocolate Cake",
-    "tags": ["dessert", "baking"]
+    "tags": ["dessert"]
 }
     </pre>
 
@@ -50,8 +61,7 @@ Content-Type: application/json
 {
     "id": 1,
     "name": "Chocolate Cake",
-    "tags": ["dessert", "baking"],
-    "createdAt": "2025-10-09T18:00:00Z"
+    "tags": ["dessert"]
 }
     </pre>
 
