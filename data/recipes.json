@@ -68,5 +68,110 @@
     "ingredients": "oats, honey, nuts, dried fruit",
     "tags": ["snack", "healthy", "quick"],
     "rating": 7
+  },
+  {
+    "id": "r11",
+    "dishName": "Margherita Pizza",
+    "ingredients": "pizza dough, tomato sauce, mozzarella, basil, olive oil",
+    "tags": ["dinner", "vegetarian"],
+    "rating": 9
+  },
+  {
+    "id": "r12",
+    "dishName": "Beef Tacos",
+    "ingredients": "tortillas, ground beef, lettuce, cheese, salsa, sour cream",
+    "tags": ["lunch", "spicy"],
+    "rating": 8
+  },
+  {
+    "id": "r13",
+    "dishName": "Chicken Curry",
+    "ingredients": "chicken, curry powder, coconut milk, garlic, onion, ginger",
+    "tags": ["dinner", "spicy"],
+    "rating": 10
+  },
+  {
+    "id": "r14",
+    "dishName": "Greek Salad",
+    "ingredients": "tomatoes, cucumber, olives, feta cheese, olive oil",
+    "tags": ["lunch", "healthy", "vegetarian"],
+    "rating": 8
+  },
+  {
+    "id": "r15",
+    "dishName": "French Omelette",
+    "ingredients": "eggs, butter, salt, pepper, chives",
+    "tags": ["breakfast", "quick"],
+    "rating": 9
+  },
+  {
+    "id": "r16",
+    "dishName": "Banana Bread",
+    "ingredients": "bananas, flour, sugar, eggs, butter",
+    "tags": ["dessert", "breakfast"],
+    "rating": 9
+  },
+  {
+    "id": "r17",
+    "dishName": "Grilled Cheese Sandwich",
+    "ingredients": "bread, cheese, butter",
+    "tags": ["lunch", "quick"],
+    "rating": 8
+  },
+  {
+    "id": "r18",
+    "dishName": "Tomato Soup",
+    "ingredients": "tomatoes, garlic, onion, olive oil, salt, pepper",
+    "tags": ["lunch", "healthy"],
+    "rating": 7
+  },
+  {
+    "id": "r19",
+    "dishName": "Omelette",
+    "ingredients": "eggs, milk, salt, pepper, cheese",
+    "tags": ["breakfast", "quick"],
+    "rating": 8
+  },
+  {
+    "id": "r20",
+    "dishName": "Brownies",
+    "ingredients": "chocolate, sugar, butter, flour, eggs",
+    "tags": ["dessert"],
+    "rating": 10
+  },
+  {
+    "id": "r21",
+    "dishName": "Fried Rice",
+    "ingredients": "rice, soy sauce, eggs, vegetables",
+    "tags": ["dinner", "quick"],
+    "rating": 9
+  },
+  {
+    "id": "r22",
+    "dishName": "Veggie Wrap",
+    "ingredients": "tortilla, lettuce, tomato, cucumber, hummus",
+    "tags": ["lunch", "healthy", "vegan" ],
+    "rating": 8
+  },
+  {
+    "id": "r23",
+    "dishName": "Hot Chocolate",
+    "ingredients": "milk, cocoa powder, sugar, whipped cream",
+    "tags": ["snack", "dessert" ],
+    "rating": 9
+  },
+  {
+    "id": "r24",
+    "dishName": "Chili Garlic Noodles",
+    "ingredients": "noodles, soy sauce, garlic, chili flakes, oil",
+    "tags": ["dinner", "spicy", "quick"],
+    "rating": 9
+  },
+  {
+    "id": "r25",
+    "dishName": "Fruit Parfait",
+    "ingredients": "yogurt, granola, honey, berries",
+    "tags": ["breakfast", "healthy", "quick"],
+    "rating": 10
   }
 ]
