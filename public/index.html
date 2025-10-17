@@ -9,6 +9,8 @@
 <body>
     <h1>Welcome to My Recipe API</h1>
     <p>This API allows you to manage recipes and tags. Below are the available endpoints and how to use them.</p>
+    <p>Overall there are 25 recipes and 10 tags.</p>
+    <p>Recipe ID's: r1, r2, r3... r25</p>
 
     <h2>Primary Resource: /recipes</h2>
     <ul>
@@ -28,20 +30,30 @@
     <ul>
         <li>
             <p>View every recipe:</p>
-            <p>localhost:5000/recipes</p>
+            <p><strong>localhost:5000/recipes</strong></p>
         </li>
-        <br>
         <br>
         <li>
-            <p>Views a single recipe:</p>
-            <p>localhost:5000/recipes/{:id}</p>
-            <p><strong>(replace {:id} with the actual recipe ID)</strong></p>
+            <p>View a single recipe:</p>
+            <p><strong>localhost:5000/recipes/:id</strong></p>
+            <p>(replace :id with the actual recipe ID)</p>
         </li>
         <br>
+        <li>
+            <p>View a recipe's ingredients:</p>
+            <p><strong>localhost:5000/recipes/:id/ingredients</strong></p>
+            <p>(replace :id with the actual recipe ID)</p>
+        </li>
+        <br>
+        <li>
+            <p>View a recipe's rating:</p>
+            <p><strong>localhost:5000/recipes/:id/rating</strong></p>
+            <p>(replace :id with the actual recipe ID)</p>
+        </li>
         <br>
         <li>
             <p>View every tag:</p>
-            <p>localhost:5000/tags</p>
+            <p><strong>localhost:5000/tags</strong></p>
         </li>
     </ul>
 

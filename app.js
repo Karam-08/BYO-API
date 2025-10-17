@@ -54,7 +54,7 @@ async function writeDB(data){
     await fs.writeFile(database, text, 'utf-8')
 }
 
-// Gets all the recipes
+// Gets all of the recipes
 app.get('/recipes', async (req, res, next) =>{
     try{
         const recipes = await listRecipes()
@@ -64,7 +64,7 @@ app.get('/recipes', async (req, res, next) =>{
     }
 })
 
-// Adds a new recipe
+// Adds a new recipe (requires POSTMAN or a similar tool)
 app.post('/recipes', async (req, res, next) =>{
     try{
         const data = req.body
@@ -101,11 +101,26 @@ app.get('/recipes/:id/ingredients', async (req, res) =>{
         res.status(200).json({dishName: recipe.dishName, ingredients: recipe.ingredients})
     }catch(err){
         console.error(err)
-        res.status(500).json({error: "Server failed to read recipes"})
+        res.status(500).json({error: "Server failed to read recipe's ingredients"})
     }
 })
 
-// Change a recipe
+// Gets a specific recipe's rating
+app.get('/recipes/:id/rating', async (req, res) =>{
+    try{
+        const recipes = await readDB()
+        const recipe = recipes.find(r => r.id == req.params.id)
+        if(!recipe){
+            return res.status(404).json({error: "recipe not found"})
+        }
+        res.status(200).json({dishName: recipe.dishName, rating: recipe.rating})
+    }catch(err){
+        console.error(err)
+        res.status(500).json({error: "Server failed to read recipe's rating"})
+    }
+})
+
+// Changes a recipe (requires POSTMAN or a similar tool)
 app.patch('/recipes/:id', async (req, res, next) =>{
     try{
         const recipes = await readDB()
@@ -129,7 +144,7 @@ app.patch('/recipes/:id', async (req, res, next) =>{
     }
 })
 
-// Delete recipe
+// Deletes a recipe (requires POSTMAN or a similar tool)
 app.delete('/recipes/:id', async (req, res, next) =>{
     try{
         const recipes = await readDB()
@@ -164,7 +179,7 @@ app.use((req, res) =>{
     res.status(404).json({error: {message: 'Route not found.'}})
 })
 
-app.use((err, req, res, next) =>{
+app.use((err, req, res) =>{
     console.error("Error", err.message)
     res.status(500).json({
         error:{
