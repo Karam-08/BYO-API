@@ -65,12 +65,12 @@ app.get('/recipes/:id', async (req, res) =>{
         const recipes = await readDB()
         const recipe = recipes.find(r => r.id == req.params.id)
         if(!recipe){
-            return res.status(404).json({error: "recipe not found"})
+            return res.status(404).json({error: "Recipe not found."})
         }
         res.status(200).json(recipe)
     }catch(err){
         console.error(err)
-        res.status(500).json({error: "Server failed to read recipes"})
+        res.status(500).json({error: "The server failed to read the recipe"})
     }
 })
 
@@ -80,12 +80,12 @@ app.get('/recipes/:id/ingredients', async (req, res) =>{
         const recipes = await readDB()
         const recipe = recipes.find(r => r.id == req.params.id)
         if(!recipe){
-            return res.status(404).json({error: "recipe not found"})
+            return res.status(404).json({error: "Recipe not found."})
         }
         res.status(200).json({dishName: recipe.dishName, ingredients: recipe.ingredients})
     }catch(err){
         console.error(err)
-        res.status(500).json({error: "Server failed to read recipe's ingredients"})
+        res.status(500).json({error: "The server failed to read the recipe's ingredients"})
     }
 })
 
@@ -95,12 +95,12 @@ app.get('/recipes/:id/rating', async (req, res) =>{
         const recipes = await readDB()
         const recipe = recipes.find(r => r.id == req.params.id)
         if(!recipe){
-            return res.status(404).json({error: "recipe not found"})
+            return res.status(404).json({error: "Recipe not found."})
         }
         res.status(200).json({dishName: recipe.dishName, rating: recipe.rating})
     }catch(err){
         console.error(err)
-        res.status(500).json({error: "Server failed to read recipe's rating"})
+        res.status(500).json({error: "Server failed to read the recipe's rating"})
     }
 })
 
