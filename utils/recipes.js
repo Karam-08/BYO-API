@@ -10,7 +10,7 @@ const folder = path.join(__dirname, '..', 'data')
 const file = path.join(folder, "recipes.json")
 
 // Verify or create file before booting program
-export async function ensureDataFile(){
+export async function ensureRecipesFile(){
     try{
         await fs.mkdir(folder, {recursive:true})
         await fs.access(file) 
@@ -33,7 +33,7 @@ export async function listRecipes(){
 }
 
 // Validate data
-async function dataValidation(input){
+async function recipeValidation(input){
     const errors = []
 
     const dishName = String(input.dishName || "").trim()
@@ -80,7 +80,7 @@ function genID(){
 
 // Adds Recipe
 export async function addRecipe(input){
-    const cleanData = await dataValidation(input)
+    const cleanData = await recipeValidation(input)
 
     const availableTags = await listValidTags()
     const tagNames = availableTags.map(t => t.name)

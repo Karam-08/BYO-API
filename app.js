@@ -4,7 +4,7 @@ import morgan from 'morgan'
 import cors from 'cors'
 import dotenv from 'dotenv'
 import {fileURLToPath} from 'url'
-import {ensureDataFile, listRecipes, addRecipe} from './utils/recipes.js'
+import {ensureRecipesFile, listRecipes, addRecipe} from './utils/recipes.js'
 import {ensureTagsFile, listTags} from './utils/tags.js'
 import fs from 'fs/promises'
 
@@ -23,26 +23,10 @@ app.use(express.json())
 app.use(express.urlencoded({extended:true}))
 app.use(morgan(':method :url :status :res[content-length] - :response-time ms'))
 
-await ensureDataFile()
-await ensureTagsFile()
+await ensureRecipesFile() // Ensures that the recipe file exists
+await ensureTagsFile() // Ensures that the tags file exists
 
 app.use(express.static(path.join(__dirname, "public")))
-
-
-app.get('/', (req, res) =>{
-    res.status(200).json({
-        message: "Welcome to the Recipe API!",
-        usage: "Use the end points to manage recipes.",
-        endpoints: {
-            "GET /recipes": "List all recipes",
-            "POST /recipes": "Create a new recipe",
-            "GET /recipes/:id": "Get one recipe by ID",
-            "PATCH /recipes/:id": "Update part of a recipe",
-            "DELETE /recipes/:id": "Delete a recipe",
-            "GET /tags": "List all tags from recipes"
-        }
-    })
-})
 
 async function readDB(){
     const rawData = await fs.readFile(database, 'utf-8')
@@ -179,6 +163,7 @@ app.use((req, res) =>{
     res.status(404).json({error: {message: 'Route not found.'}})
 })
 
+// General error handler
 app.use((err, req, res) =>{
     console.error("Error", err.message)
     res.status(500).json({
