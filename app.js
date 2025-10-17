@@ -48,6 +48,24 @@ app.get('/recipes', async (req, res, next) =>{
     }
 })
 
+// WIP
+app.get('recipes/ingredients', async (req, res, next) =>{
+    try{
+        const recipes = await listRecipes()
+    }catch(err){
+        next(err)
+    }
+})
+
+// WIP
+app.get('recipes/ratings', async (req, res, next) =>{
+    try{
+        const recipes = await listRecipes()
+    }catch(err){
+        next(err)
+    }
+})
+
 // Adds a new recipe (requires POSTMAN or a similar tool)
 app.post('/recipes', async (req, res, next) =>{
     try{
