@@ -28,6 +28,22 @@ await ensureTagsFile()
 
 app.use(express.static(path.join(__dirname, "public")))
 
+
+app.get('/', (req, res) =>{
+    res.status(200).json({
+        message: "Welcome to the Recipe API!",
+        usage: "Use the end points to manage recipes.",
+        endpoints: {
+            "GET /recipes": "List all recipes",
+            "POST /recipes": "Create a new recipe",
+            "GET /recipes/:id": "Get one recipe by ID",
+            "PATCH /recipes/:id": "Update part of a recipe",
+            "DELETE /recipes/:id": "Delete a recipe",
+            "GET /tags": "List all tags from recipes"
+        }
+    })
+})
+
 async function readDB(){
     const rawData = await fs.readFile(database, 'utf-8')
     return JSON.parse(rawData)
