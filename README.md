@@ -71,8 +71,10 @@ POST /recipes
 Content-Type: application/json
 
 {
-    "name": "Chocolate Cake",
+    "dishName": "Chocolate Cake",
+    "ingredients": "flour, sugar, cocoa powder, eggs, butter, milk",
     "tags": ["dessert"]
+    "rating": 9
 }
 ```
 
@@ -82,9 +84,11 @@ Content-Type: application/json
 
 ```json
 {
-    "id": 1,
-    "name": "Chocolate Cake",
-    "tags": ["dessert"]
+    "id": "r1",
+    "dishName": "Chocolate Cake",
+    "ingredients": "flour, sugar, cocoa powder, eggs, butter, milk",
+    "tags": ["dessert"],
+    "rating": 9
 }
 ```
 

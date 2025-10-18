@@ -43,7 +43,7 @@ async function recipeValidation(input){
 
     if(!dishName){errors.push("The name of the dish is required.")}
     if(!ingredients){errors.push("The ingredients are required.")}
-    if(!tags){errors.push("Tags are required.")}
+    if(tags.length === 0){errors.push("At least 1 tag is required.")}
     if(!Number.isFinite(rating) || rating < 1 || rating > 10){
         errors.push("The rating must be a number between 1 and 10.")
     }
@@ -67,15 +67,29 @@ async function recipeValidation(input){
 
     return{
         dishName,
-        ingredients: ingredients.toLowerCase(),
+        ingredients: ingredients
+            .toLowerCase()
+            .split(',')
+            .map(i => i.trim())
+            .join(', '), // normalizes the spaces after commas to match the rest of the recipes
         tags: tagsArray,
         rating
     }
 }
 
 // Gen ID
-function genID(){
-    return(Date.now().toString(36) + Math.random().toString(36).slice(2, 8).toUpperCase())
+async function genID(){
+    const recipes = await listRecipes()
+    const maxNum = recipes
+        .map(r =>{
+            const id = r.id || "" // Fallback in case id is missing
+            if(typeof id === "string" && id.startsWith("r")){  // If the ID is a string and starts with "r"
+                return Number(id.replace("r", "")) // remove the "r" and convert it to a number
+            }
+            return 0 // Otherwise return 0
+        })
+        .reduce((a, b) => Math.max(a, b), 0) // Finds the maximum number or returns 0 as a fallback
+    return `r${maxNum + 1}` // returns r followed by the next number
 }
 
 // Adds Recipe
@@ -91,9 +105,8 @@ export async function addRecipe(input){
     }
 
     const newRecipe = {
-        id: genID(),
+        id: await genID(),
         ...cleanData,
-        addedOn: new Date().toISOString()
     }
 
     const recipes = await listRecipes()
