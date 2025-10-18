@@ -26,6 +26,24 @@ app.use(morgan(':method :url :status :res[content-length] - :response-time ms'))
 await ensureRecipesFile() // Ensures that the recipe file exists
 await ensureTagsFile() // Ensures that the tags file exists
 
+app.get('/', (req, res) =>{
+    if(req.accepts('JSON')){ // If the client wants JSON (like POSTMAN)
+        res.status(200).json({ // Send the JSON response
+            message: "Welcome to the Recipe API!",
+            usage: "Use the end points to manage recipes.",
+            endpoints: {
+                "GET /recipes": "List all recipes",
+                "POST /recipes": "Create a new recipe",
+                "GET /recipes/:id": "Get one recipe by ID",
+                "PATCH /recipes/:id": "Update part of a recipe",
+                "DELETE /recipes/:id": "Delete a recipe",
+                "GET /tags": "List all tags from recipes"
+            }
+        })
+    }
+    next() // Otherwise, it will continue to the next middleware (static files)
+})
+
 app.use(express.static(path.join(__dirname, "public")))
 
 async function readDB(){
@@ -48,21 +66,33 @@ app.get('/recipes', async (req, res, next) =>{
     }
 })
 
-// WIP
-app.get('recipes/ingredients', async (req, res, next) =>{
+// Gets all of the recipes' ingredients
+app.get('recipes/ingredients', async (req, res) =>{
     try{
-        const recipes = await listRecipes()
+        const recipes = await readDB()
+        const allIngredients = recipes.map(r =>({ // Creates a new array with
+            dishName: r.dishName, // The dish name
+            ingredients: r.ingredients // And the ingredients
+        }))
+        res.status(200).json({count: allIngredients.length, allIngredients}) // Which is shown as a response
     }catch(err){
-        next(err)
+        console.error(err)
+        res.status(500).json({error: "The server failed to read the recipes' ingredients"})
     }
 })
 
-// WIP
-app.get('recipes/ratings', async (req, res, next) =>{
+// Gets all of the recipes' ratings
+app.get('recipes/ratings', async (req, res) =>{
     try{
-        const recipes = await listRecipes()
+        const recipes = await readDB()
+        const allRatings = recipes.map(r =>({
+            dishName: r.dishName,
+            rating: r.rating
+        }))
+        res.status(200).json({count: allRatings.length, allRatings})
     }catch(err){
-        next(err)
+        console.error(err)
+        res.status(500).json({error: "The server failed to read the recipes' ratings"})
     }
 })
 
