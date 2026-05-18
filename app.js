@@ -26,7 +26,7 @@ app.use(morgan(':method :url :status :res[content-length] - :response-time ms'))
 await ensureRecipesFile() // Ensures that the recipe file exists
 await ensureTagsFile() // Ensures that the tags file exists
 
-app.use(express.static(path.join(__dirname, "public")))
+app.use(express.static(path.join(__dirname, "docs")))
 
 async function readDB(){
     const rawData = await fs.readFile(database, 'utf-8')
